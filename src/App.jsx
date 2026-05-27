@@ -8,7 +8,7 @@ import {
 // ─── Constants ────────────────────────────────────────────────────────────────
 const CHANNELS = [
   { id: "robin",  label: "Bin's",  sub: "@robs_bin.s", color: "#f97316", light: "#fff4ed", emoji: "🥊" },
-  { id: "collab", label: "Collab", sub: "partenaire",   color: "#06b6d4", light: "#ecfeff", emoji: "🤝" },
+  { id: "collab", label: "Estelle", sub: "@estelle",   color: "#06b6d4", light: "#ecfeff", emoji: "🤝" },
   { id: "common", label: "Commun", sub: "collabs",      color: "#8b5cf6", light: "#f5f3ff", emoji: "⚡" },
 ];
 const METRICS = ["views","likes","shares","saves"];
@@ -641,7 +641,16 @@ export default function App() {
                         ))}
                         <span style={{fontSize:10,color:"#94a3b8",marginLeft:4}}>données</span>
                       </div>
-                      {v.pubDate && <span style={{fontSize:11,color:"#94a3b8"}}>📅 {v.pubDate}</span>}
+                      <div style={{display:"flex",alignItems:"center",gap:8}}>
+                        {v.pubDate && <span style={{fontSize:11,color:"#94a3b8"}}>📅 {v.pubDate}</span>}
+                        <button style={S.deleteBtn} onClick={e=>{
+                          e.stopPropagation();
+                          if(window.confirm(`Supprimer "${v.title}" ?`)){
+                            removeVideo(v.id);
+                            if(selectedId===v.id) setSelectedId(null);
+                          }
+                        }}>🗑</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -749,4 +758,5 @@ const S = {
   insightTitle:{fontSize:13,fontWeight:800,color:"#0f172a",marginBottom:12},
   insightItem:{fontSize:13,color:"#475569",marginBottom:8,lineHeight:1.6},
   empty:{color:"#94a3b8",fontSize:14,padding:"40px 0",textAlign:"center"},
+  deleteBtn:{background:"none",border:"none",color:"#fca5a5",cursor:"pointer",fontSize:15,padding:"2px 4px",borderRadius:6,lineHeight:1},
 };
